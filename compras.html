@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concesionario de Autos - Mis Compras</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+        }
+        
+        .sidebar {
+            width: 200px;
+            background-color: #2e7d32;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+        
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            display: block;
+        }
+        
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .container {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #388e3c;
+            font-size: 1.8em;
+            margin-bottom: 16px;
+        }
+        
+        .summary {
+            background-color: #f9f9f9;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .summary p {
+            margin: 8px 0;
+            font-size: 1.1em;
+        }
+        
+        .filter-input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 16px;
+            position: relative;
+        }
+        
+        .card p {
+            color: #666;
+            margin: 8px 0;
+        }
+        
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .btn {
+            background-color: #388e3c;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: #2e7d32;
+        }
+        
+        .btn-delete {
+            background-color: #d32f2f;
+        }
+        
+        .btn-delete:hover {
+            background-color: #b71c1c;
+        }
+        
+        .no-compras {
+            color: #666;
+            text-align: center;
+            font-style: italic;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="inventario.html">Inventario</a></li>
+            <li><a href="promociones.html">Promociones</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="testimonios.html">Testimonios</a></li>
+            <li><a href="compras.html" class="active">Mis Compras</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section class="section">
+            <h2>Mis Compras</h2>
+            <div class="mb-4">
+                <label for="filtroEmail" class="block text-sm font-medium text-gray-700">Filtrar por Email</label>
+                <input type="text" id="filtroEmail" class="filter-input" placeholder="Ej. ejemplo@correo.com">
+            </div>
+            <div class="summary">
+                <p><strong>Total de Compras:</strong> <span id="totalCompras">0</span></p>
+                <p><strong>Monto Total:</strong> $<span id="montoTotal">0</span> MXN</p>
+            </div>
+            <div id="comprasList" class="card-grid">
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function obtenerCompras() {
+            return JSON.parse(localStorage.getItem('compras') || '[]');
+        }
+
+        function guardarCompras(compras) {
+            localStorage.setItem('compras', JSON.stringify(compras));
+        }
+
+        function calcularPagoMensual(precio, plazo) {
+            const tasaAnual = 0.12;
+            const interesTotal = precio * tasaAnual * (plazo / 12);
+            const totalAPagar = precio + interesTotal;
+            return (totalAPagar / plazo).toFixed(2);
+        }
+
+        function mostrarCompras(comprasFiltradas = obtenerCompras()) {
+            const comprasList = document.getElementById('comprasList');
+            const totalCompras = document.getElementById('totalCompras');
+            const montoTotal = document.getElementById('montoTotal');
+            if (!comprasList || !totalCompras || !montoTotal) {
+                console.error('Elementos del DOM no encontrados');
+                return;
+            }
+
+            comprasList.innerHTML = '';
+            if (comprasFiltradas.length === 0) {
+                comprasList.innerHTML = '<p class="no-compras">No hay compras registradas.</p>';
+                totalCompras.textContent = '0';
+                montoTotal.textContent = '0';
+                return;
+            }
+
+            comprasFiltradas.forEach((compra, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                let financiamientoInfo = '';
+                if (compra.metodoPago === 'financiado' && compra.plazoFinanciamiento) {
+                    const pagoMensual = calcularPagoMensual(compra.precio, compra.plazoFinanciamiento);
+                    financiamientoInfo = `
+                        <p><strong>Plazo:</strong> ${compra.plazoFinanciamiento} meses</p>
+                        <p><strong>Pago Mensual:</strong> $${parseFloat(pagoMensual).toLocaleString('es-MX')} MXN</p>
+                    `;
+                }
+                card.innerHTML = `
+                    <p><strong>Auto:</strong> ${compra.auto}</p>
+                    <p><strong>Precio:</strong> $${compra.precio.toLocaleString('es-MX')} MXN</p>
+                    <p><strong>Nombre:</strong> ${compra.nombre}</p>
+                    <p><strong>Email:</strong> ${compra.email}</p>
+                    <p><strong>Método de Pago:</strong> ${compra.metodoPago}</p>
+                    ${financiamientoInfo}
+                    <p><strong>Fecha:</strong> ${compra.fecha}</p>
+                    <div class="card-buttons">
+                        <button class="btn" onclick="descargarTicket(${index})">Descargar Ticket</button>
+                        <button class="btn btn-delete" onclick="eliminarCompra(${index})">Eliminar</button>
+                    </div>
+                `;
+                comprasList.appendChild(card);
+            });
+
+            totalCompras.textContent = comprasFiltradas.length;
+            const total = comprasFiltradas.reduce((sum, compra) => sum + compra.precio, 0);
+            montoTotal.textContent = total.toLocaleString('es-MX');
+        }
+
+        function descargarTicket(index) {
+            const compras = obtenerCompras();
+            const compra = compras[index];
+            if (!compra) {
+                alert('Error: Compra no encontrada');
+                return;
+            }
+
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            const verde = [46, 125, 50];
+            const grisClaro = [240, 240, 240];
+
+
+            doc.setFillColor(...verde);
+            doc.rect(0, 0, 210, 30, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(20);
+            doc.text('Concesionario de Nery', 20, 20);
+
+            try {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.src = 'hondaC.jpg';
+                img.onload = function() {
+                    doc.addImage(img, 'JPEG', 160, 10, 30, 15);
+                    continuarPDF();
+                };
+                img.onerror = continuarPDF;
+            } catch (e) {
+                continuarPDF();
+            }
+
+            function continuarPDF() {
+                doc.setFontSize(14);
+                doc.setTextColor(0, 0, 0);
+                doc.text('Ticket de Compra', 20, 40);
+
+                doc.autoTable({
+                    startY: 50,
+                    head: [
+                        ['Campo', 'Valor']
+                    ],
+                    body: [
+                        ['Auto', compra.auto],
+                        ['Precio', `$${compra.precio.toLocaleString('es-MX')} MXN`],
+                        ['Nombre', compra.nombre],
+                        ['Email', compra.email],
+                        ['Método de Pago', compra.metodoPago],
+                        ['Fecha', compra.fecha]
+                    ],
+                    theme: 'grid',
+                    headStyles: {
+                        fillColor: verde,
+                        textColor: [255, 255, 255]
+                    },
+                    alternateRowStyles: {
+                        fillColor: grisClaro
+                    },
+                    margin: {
+                        left: 20,
+                        right: 20
+                    }
+                });
+
+                if (compra.metodoPago === 'financiado' && compra.plazoFinanciamiento) {
+                    const pagoMensual = calcularPagoMensual(compra.precio, compra.plazoFinanciamiento);
+                    doc.setFontSize(12);
+                    doc.text('Detalles de Financiamiento', 20, doc.lastAutoTable.finalY + 10);
+                    doc.autoTable({
+                        startY: doc.lastAutoTable.finalY + 20,
+                        head: [
+                            ['Campo', 'Valor']
+                        ],
+                        body: [
+                            ['Plazo', `${compra.plazoFinanciamiento} meses`],
+                            ['Tasa de Interés', '12% anual'],
+                            ['Pago Mensual', `$${parseFloat(pagoMensual).toLocaleString('es-MX')} MXN`]
+                        ],
+                        theme: 'grid',
+                        headStyles: {
+                            fillColor: verde,
+                            textColor: [255, 255, 255]
+                        },
+                        alternateRowStyles: {
+                            fillColor: grisClaro
+                        },
+                        margin: {
+                            left: 20,
+                            right: 20
+                        }
+                    });
+                }
+
+                doc.setFillColor(...verde);
+                doc.rect(0, 277, 210, 20, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(10);
+                doc.text('Gracias por su compra! Contacto: contacto@autosneryy.com', 20, 287);
+
+                doc.save(`ticket_compra_${compra.auto}_${compra.fecha.replace(/[:\/]/g, '-')}.pdf`);
+            }
+        }
+
+        function eliminarCompra(index) {
+            if (!confirm('¿Estás seguro de eliminar esta compra?')) return;
+            const compras = obtenerCompras();
+            compras.splice(index, 1);
+            guardarCompras(compras);
+            mostrarCompras();
+        }
+
+        function filtrarCompras() {
+            const filtro = document.getElementById('filtroEmail').value.toLowerCase().trim();
+            const compras = obtenerCompras();
+            const comprasFiltradas = filtro ?
+                compras.filter(compra => compra.email.toLowerCase().includes(filtro)) :
+                compras;
+            mostrarCompras(comprasFiltradas);
+        }
+
+        document.getElementById('filtroEmail').addEventListener('input', filtrarCompras);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            mostrarCompras();
+        });
+    </script>
+</body>
+
+</html>
