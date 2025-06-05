@@ -1,10 +1,12 @@
       body {
           font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             color: #333;
             margin: 0;
         }
-        
+        .simple-linear {
+  background: linear-gradient(blue, pink);
+}
+
         .sidebar {
             width: 200px;
             background-color: #2e7d32;
