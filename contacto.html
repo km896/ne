@@ -31,19 +31,19 @@
             <p><strong>Dirección:</strong> Av. Principal 123, Ciudad Auto, CP 12345</p>
             <p><strong>Teléfono:</strong> <a href="tel:+1234567890">(123) 456-7890</a></p>
             <p><strong>Email:</strong> <a href="mailto:contacto@autosnery.com">contacto@autosnery.com</a></p>
-            <p><strong>Horario:</strong> Lunes a Viernes 9:00 - 18:00, S surgesábado 10:00 - 14:00</p>
+            <p><strong>Horario:</strong> Lunes a Viernes 9:00 - 18:00, Sábado 10:00 - 14:00</p>
         </section>
 
         <section class="hero" aria-labelledby="hero-title">
             <h1 id="hero-title" class="hidden">Mensaje de Bienvenida</h1>
-            <p>Me gustaría saber qué te parece esta página.</p>
-            <p>Si hay algo que crees que se puede mejorar, ¡tus ideas y sugerencias serán más que bien recibidas!</p>
-            <p>Gracias por tomarte un rato para ayudarme con esto.</p>
+            <p class="hero-text">Me gustaría saber qué te parece esta página.</p>
+            <p class="hero-text">Si hay algo que crees que se puede mejorar, ¡tus ideas y sugerencias serán más que bien recibidas!</p>
+            <p class="hero-text">Gracias por tomarte un rato para ayudarme con esto.</p>
         </section>
 
         <section id="formulario-coment" class="info-section" aria-labelledby="formulario-title">
             <h1 id="formulario-title">Envía tus comentarios</h1>
-            <form action="https://formsubmit.co/kevinmaldonadoavelino@gmail.com" method="POST">
+            <form action="https://formsubmit.co/kevinmaldonadoavelino@gmail.com" method="POST" id="contact-form">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required placeholder="Tu nombre"/>
 
@@ -57,7 +57,7 @@
                 <input type="hidden" name="_next" value="https://km896.github.io/ne/contacto.html" />
                 <input type="hidden" name="_captcha" value="false" />
 
-                <button type="submit">Enviar comentario</button>
+                <button type="submit" class="submit-btn">Enviar comentario</button>
             </form>
         </section>
     </main>
