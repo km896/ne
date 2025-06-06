@@ -25,7 +25,7 @@
             modelo: "Camaro",
             ano: 2022,
             precio: 700000,
-            imagen: "imagenes/ChevroletC.jpg"
+            imagen: "imagenes/chevroletC.jpg"
         }, {
             id: 5,
             marca: "Nissan",
