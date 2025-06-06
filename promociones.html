@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Descubre las promociones especiales de nuestro concesionario de autos, incluyendo descuentos, financiamiento y bonos.">
-    <meta name="keywords" content="concesionario, autos, promociones, descuentos, financiamiento">
+    <meta name="description" content="Explora las promociones exclusivas de nuestro concesionario de autos, con descuentos, financiamiento y beneficios especiales.">
+    <meta name="keywords" content="concesionario, autos, promociones, descuentos, financiamiento, bonos">
     <meta name="author" content="Concesionario de Autos">
     <title>Concesionario de Autos - Promociones</title>
     <link rel="stylesheet" href="promociones.css">
 </head>
 <body>
     <header>
-        <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <button class="menu-toggle" aria-label="Alternar menú de navegación">☰</button>
         <nav class="sidebar" aria-label="Navegación principal">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
@@ -33,44 +33,91 @@
                     <img src="https://via.placeholder.com/300x150?text=Descuento" alt="Descuento de temporada en autos">
                     <h2>Descuento de Temporada</h2>
                     <p>¡10% de descuento en todos los modelos 2021 y anteriores! Válido hasta fin de mes.</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#descuento-temporada" class="btn">Ver Detalles</a>
                 </article>
                 <article class="card">
                     <img src="https://via.placeholder.com/300x150?text=Financiamiento" alt="Financiamiento sin intereses">
                     <h2>Financiamiento sin Intereses</h2>
                     <p>Hasta 24 meses sin intereses en autos seleccionados. ¡Consulta los detalles!</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#financiamiento" class="btn">Ver Detalles</a>
                 </article>
                 <article class="card">
                     <img src="https://via.placeholder.com/300x150?text=Trade-In" alt="Bono por trade-in de auto usado">
                     <h2>Bono por Trade-In</h2>
                     <p>Entrega tu auto usado y obtén un bono de hasta $2,000 en la compra de un vehículo nuevo.</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#trade-in" class="btn">Ver Detalles</a>
                 </article>
                 <article class="card">
                     <img src="https://via.placeholder.com/300x150?text=Mantenimiento" alt="Paquete de mantenimiento gratis">
                     <h2>Paquete de Mantenimiento Gratis</h2>
                     <p>Compra cualquier auto 2022 o posterior y recibe un año de mantenimiento gratuito.</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#mantenimiento" class="btn">Ver Detalles</a>
                 </article>
                 <article class="card">
                     <img src="https://via.placeholder.com/300x150?text=Seguro" alt="Seguro gratis por un año">
                     <h2>Seguro Gratis</h2>
                     <p>Adquiere un vehículo nuevo y obtén un año de seguro a todo riesgo gratis.</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#seguro" class="btn">Ver Detalles</a>
                 </article>
                 <article class="card">
                     <img src="https://via.placeholder.com/300x150?text=Accesorios" alt="Paquete de accesorios gratis">
                     <h2>Paquete de Accesorios</h2>
                     <p>Recibe un paquete de accesorios valorado en $500 con la compra de cualquier SUV.</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#accesorios" class="btn">Ver Detalles</a>
                 </article>
                 <article class="card">
                     <img src="https://via.placeholder.com/300x150?text=DescuentoFamiliar" alt="Descuento para familias">
                     <h2>Descuento Familiar</h2>
                     <p>¡15% de descuento en minivans para familias numerosas! Válido hasta el 15 de julio.</p>
-                    <a href="#detalles" class="btn">Ver Detalles</a>
+                    <a href="#descuento-familiar" class="btn">Ver Detalles</a>
                 </article>
+            </div>
+        </section>
+
+        <!-- Sección de detalles de las promociones -->
+        <section class="section details" aria-labelledby="detalles-title">
+            <h1 id="detalles-title">Detalles de las Promociones</h1>
+            <div class="detail" id="descuento-temporada">
+                <h2>Descuento de Temporada</h2>
+                <p><strong>Vigencia:</strong> Hasta el 30 de junio de 2025.</p>
+                <p><strong>Detalles:</strong> Aplica a todos los modelos 2021 y anteriores en inventario. No combinable con otras promociones. Descuento aplicado directamente en el precio final al momento de la compra.</p>
+                <p><strong>Requisitos:</strong> Presentar identificación oficial y firmar contrato de compra antes de la fecha de vencimiento.</p>
+            </div>
+            <div class="detail" id="financiamiento">
+                <h2>Financiamiento sin Intereses</h2>
+                <p><strong>Vigencia:</strong> Hasta el 31 de julio de 2025.</p>
+                <p><strong>Detalles:</strong> Disponible para modelos seleccionados (sedanes y hatchbacks 2022-2023). Plazo máximo de 24 meses. Sujeto a aprobación de crédito por la financiera asociada.</p>
+                <p><strong>Requisitos:</strong> Ingreso mensual mínimo comprobable de $1,500 USD y buen historial crediticio.</p>
+            </div>
+            <div class="detail" id="trade-in">
+                <h2>Bono por Trade-In</h2>
+                <p><strong>Vigencia:</strong> Hasta el 15 de agosto de 2025.</p>
+                <p><strong>Detalles:</strong> Bono de hasta $2,000 según la valoración del vehículo usado (modelos 2015 o posteriores). Aplica únicamente a la compra de vehículos nuevos.</p>
+                <p><strong>Requisitos:</strong> El vehículo usado debe estar en buenas condiciones y con documentación en regla.</p>
+            </div>
+            <div class="detail" id="mantenimiento">
+                <h2>Paquete de Mantenimiento Gratis</h2>
+                <p><strong>Vigencia:</strong> Hasta el 31 de diciembre de 2025.</p>
+                <p><strong>Detalles:</strong> Incluye 3 servicios de mantenimiento básico (cambio de aceite, filtros y revisión general) durante el primer año. Aplica a modelos 2022 o posteriores.</p>
+                <p><strong>Requisitos:</strong> Compra de vehículo nuevo y registro en el programa de mantenimiento del concesionario.</p>
+            </div>
+            <div class="detail" id="seguro">
+                <h2>Seguro Gratis</h2>
+                <p><strong>Vigencia:</strong> Hasta el 30 de septiembre de 2025.</p>
+                <p><strong>Detalles:</strong> Seguro a todo riesgo por un año cubriendo daños, robo y responsabilidad civil. Aplica a vehículos nuevos comprados en el concesionario.</p>
+                <p><strong>Requisitos:</strong> Firma de contrato de compra y registro del seguro con la aseguradora asociada.</p>
+            </div>
+            <div class="detail" id="accesorios">
+                <h2>Paquete de Accesorios</h2>
+                <p><strong>Vigencia:</strong> Hasta el 31 de octubre de 2025.</p>
+                <p><strong>Detalles:</strong> Incluye tapetes, protectores de pintura y un kit de seguridad (valorado en $500) gratis con la compra de cualquier SUV.</p>
+                <p><strong>Requisitos:</strong> Compra de un SUV nuevo y solicitud del paquete al momento de la compra.</p>
+            </div>
+            <div class="detail" id="descuento-familiar">
+                <h2>Descuento Familiar</h2>
+                <p><strong>Vigencia:</strong> Hasta el 15 de julio de 2025.</p>
+                <p><strong>Detalles:</strong> 15% de descuento en minivans de 7 o más pasajeros. Ideal para familias numerosas. No combinable con otras promociones.</p>
+                <p><strong>Requisitos:</strong> Comprobar núcleo familiar de 4 o más personas (acta de nacimiento o documentos oficiales).</p>
             </div>
         </section>
     </main>
