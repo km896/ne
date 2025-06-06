@@ -1,62 +1,154 @@
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-        }
-        
-        .sidebar {
-            width: 200px;
-            background-color: #2e7d32;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding-top: 20px;
-        }
-        
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .sidebar ul li {
-            margin: 10px 0;
-        }
-        
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px;
-            display: block;
-        }
-        
-        .sidebar ul li a:hover,
-        .sidebar ul li a.active {
-            background-color: #4caf50;
-            font-weight: bold;
-        }
-        
-        .container {
-            margin-left: 220px;
-            padding: 20px;
-        }
-        
-        .section {
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        h2 {
-            color: #388e3c;
-            font-size: 1.8em;
-            margin-bottom: 16px;
-        }
-        
-        p {
-            color: #666;
-        }
+:root {
+    --primary-color: #2e7d32;
+    --accent-color: #4caf50;
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --text-secondary: #666;
+    --sidebar-width: 250px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--primary-color);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 1.5rem;
+    transition: transform var(--transition-speed) ease-in-out;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 0.5rem 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    display: block;
+    transition: background-color var(--transition-speed) ease, padding-left var(--transition-speed) ease;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: var(--accent-color);
+    padding-left: 1.5rem;
+    font-weight: 600;
+}
+
+.container {
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    transition: margin-left var(--transition-speed) ease;
+}
+
+.section {
+    background-color: #fff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed) ease;
+}
+
+.section:hover {
+    transform: translateY(-2px);
+}
+
+h2 {
+    color: var(--primary-color);
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .container {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        z-index: 1000;
+        border-radius: 0.25rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .sidebar ul li a,
+    .container,
+    .section {
+        transition: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    body {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .sidebar {
+        background-color: #006400;
+    }
+
+    .sidebar ul li a {
+        color: #fff;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+        background-color: #008000;
+    }
+
+    h2 {
+        color: #006400;
+    }
+
+    p {
+        color: #000;
+    }
+}
