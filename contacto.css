@@ -9,7 +9,7 @@ body {
     line-height: 1.6;
     color: #333;
     background: linear-gradient(135deg, #e6f0ff 0%, #f4f4f4 100%);
-    animation: fadeIn 1s ease-in;
+    animation: fadeIn 1.5s ease-in;
 }
 
 @keyframes fadeIn {
@@ -21,7 +21,7 @@ header {
     background: linear-gradient(to right, #003087, #0059ff);
     color: white;
     position: relative;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .menu-toggle {
@@ -35,11 +35,12 @@ header {
     position: absolute;
     top: 10px;
     left: 10px;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease, color 0.3s ease;
 }
 
 .menu-toggle:hover {
-    transform: scale(1.1);
+    transform: rotate(90deg) scale(1.2);
+    color: #ff6200;
 }
 
 .sidebar {
@@ -50,7 +51,13 @@ header {
     left: 0;
     height: 100%;
     padding-top: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+.sidebar.active {
+    transform: translateX(0);
 }
 
 .sidebar ul {
@@ -59,6 +66,23 @@ header {
 
 .sidebar ul li {
     margin: 20px 0;
+    opacity: 0;
+    animation: slideInMenu 0.5s ease forwards;
+    animation-delay: calc(0.1s * var(--i));
+}
+
+.sidebar ul li:nth-child(1) { --i: 1; }
+.sidebar ul li:nth-child(2) { --i: 2; }
+.sidebar ul li:nth-child(3) { --i: 3; }
+.sidebar ul li:nth-child(4) { --i: 4; }
+.sidebar ul li:nth-child(5) { --i: 5; }
+.sidebar ul li:nth-child(6) { --i: 6; }
+.sidebar ul li:nth-child(7) { --i: 7; }
+.sidebar ul li:nth-child(8) { --i: 8; }
+
+@keyframes slideInMenu {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
 
 .sidebar ul li a {
@@ -67,25 +91,26 @@ header {
     padding: 12px 25px;
     display: block;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .sidebar ul li a:hover,
 .sidebar ul li a.active {
     background-color: #ff6200;
     border-radius: 0 25px 25px 0;
-    transform: translateX(10px);
+    transform: translateX(15px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .container {
     margin-left: 240px;
     padding: 30px;
     max-width: 1200px;
-    animation: slideIn 0.5s ease-out;
+    animation: slideInContent 0.8s ease-out;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
+@keyframes slideInContent {
+    from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
@@ -93,8 +118,14 @@ header {
     padding: 30px;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
+    animation: fadeInSection 1s ease-out;
+}
+
+@keyframes fadeInSection {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 h1 {
@@ -109,17 +140,34 @@ h1 {
     margin-bottom: 15px;
     color: #555;
     font-size: 1.1rem;
+    transition: transform 0.3s ease;
 }
 
 .contacto p a {
     color: #0059ff;
     text-decoration: none;
+    position: relative;
     transition: color 0.3s ease;
 }
 
 .contacto p a:hover {
     color: #ff6200;
-    text-decoration: underline;
+    transform: translateY(-2px);
+}
+
+.contacto p a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #ff6200;
+    transition: width 0.3s ease;
+}
+
+.contacto p a:hover::after {
+    width: 100%;
 }
 
 .hero {
@@ -128,10 +176,15 @@ h1 {
     border-radius: 12px;
     text-align: center;
     margin-bottom: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: relative;
     color: white;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease;
+}
+
+.hero:hover {
+    transform: scale(1.02);
 }
 
 .hero::before {
@@ -141,15 +194,27 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 48, 135, 0.6);
+    background: rgba(0, 48, 135, 0.7);
     border-radius: 12px;
 }
 
-.hero p {
+.hero .hero-text {
     position: relative;
     margin-bottom: 15px;
     font-size: 1.2rem;
     font-weight: 500;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: calc(0.2s * var(--i));
+}
+
+.hero .hero-text:nth-child(1) { --i: 1; }
+.hero .hero-text:nth-child(2) { --i: 2; }
+.hero .hero-text:nth-child(3) { --i: 3; }
+
+@keyframes fadeInText {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .hidden {
@@ -167,7 +232,8 @@ h1 {
     padding: 30px;
     background: white;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeInSection 1s ease-out;
 }
 
 .info-section form {
@@ -182,6 +248,9 @@ h1 {
     font-weight: 700;
     color: #003087;
     font-size: 1.1rem;
+    opacity: 0;
+    animation: slideInField 0.5s ease forwards;
+    animation-delay: calc(0.2s * var(--i));
 }
 
 .info-section input,
@@ -192,17 +261,39 @@ h1 {
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideInField 0.5s ease forwards;
+    animation-delay: calc(0.2s * var(--i));
+}
+
+.info-section label:nth-child(1) { --i: 1; }
+.info-section input:nth-child(2) { --i: 2; }
+.info-section label:nth-child(3) { --i: 3; }
+.info-section input:nth-child(4) { --i: 4; }
+.info-section label:nth-child(5) { --i: 5; }
+.info-section textarea:nth-child(6) { --i: 6; }
+
+@keyframes slideInField {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .info-section input:focus,
 .info-section textarea:focus {
     border-color: #ff6200;
-    box-shadow: 0 0 8px rgba(255, 98, 0, 0.3);
+    box-shadow: 0 0 10px rgba(255, 98, 0, 0.4);
     outline: none;
 }
 
-.info-section textarea {
-    resize: vertical;
+.info-section input.error,
+.info-section textarea.error {
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
 }
 
 .info-section input::placeholder,
@@ -210,7 +301,7 @@ h1 {
     color: #999;
 }
 
-.info-section button {
+.info-section button.submit-btn {
     padding: 12px;
     background-color: #ff6200;
     color: white;
@@ -219,13 +310,37 @@ h1 {
     cursor: pointer;
     font-size: 1.1rem;
     font-weight: 600;
+    position: relative;
+    overflow: hidden;
     transition: all 0.3s ease;
 }
 
-.info-section button:hover {
+.info-section button.submit-btn:hover {
     background-color: #e65500;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+.info-section button.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.info-section button.submit-btn.loading span {
+    visibility: hidden;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @media (max-width: 768px) {
@@ -238,10 +353,12 @@ h1 {
         height: auto;
         position: relative;
         display: none;
+        transform: translateX(-100%);
     }
 
     .sidebar.active {
         display: block;
+        transform: translateX(0);
     }
 
     .container {
